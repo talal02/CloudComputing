@@ -1,0 +1,19 @@
+# Build image for image_service (FastAPI + MobileNetV2)
+FROM python:3.13-slim
+
+# Minimal Python packages required for CPU inference
+RUN pip install --no-cache-dir \
+    fastapi uvicorn[standard] \
+    pillow python-multipart numpy
+
+RUN pip install --no-cache-dir torch==2.7.0+cpu torchvision==0.22.0+cpu --index-url https://download.pytorch.org/whl/cpu
+
+# Copy application code
+WORKDIR /app
+COPY image_service.py .
+
+# Expose inference port
+EXPOSE 5000
+
+# Start service
+CMD ["python", "image_service.py"] 

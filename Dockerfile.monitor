@@ -1,0 +1,13 @@
+# Build image for latency monitor
+FROM python:3.13-slim
+
+# Minimal deps for monitor service
+RUN pip install --no-cache-dir fastapi uvicorn[standard] prometheus-client psutil numpy
+
+WORKDIR /app
+COPY monitor.py .
+
+# 9000 FastAPI stats, 8000 Prometheus optional
+EXPOSE 9000 8000
+
+CMD ["python", "monitor.py"] 

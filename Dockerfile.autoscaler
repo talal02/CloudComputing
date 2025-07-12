@@ -1,0 +1,10 @@
+# Build image for custom latency autoscaler
+FROM python:3.13-slim
+
+# Minimal deps for autoscaler
+RUN pip install --no-cache-dir kubernetes requests
+
+WORKDIR /app
+COPY autoscaler.py .
+
+CMD ["python", "autoscaler.py"] 

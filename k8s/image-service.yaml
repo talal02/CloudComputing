@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: image-classifier
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: image-classifier
+  template:
+    metadata:
+      labels:
+        app: image-classifier
+    spec:
+      containers:
+      - name: image-service
+        image: demo/image-service:latest
+        imagePullPolicy: IfNotPresent 
+        ports:
+        - containerPort: 5000
+        resources:
+          requests:
+            memory: "0.75Gi"
+            cpu: "750m"
+          limits:
+            memory: "1.5Gi"
+            cpu: "1250m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: image-classifier
+spec:
+  selector:
+    app: image-classifier
+  ports:
+  - port: 5000
+    targetPort: 5000 

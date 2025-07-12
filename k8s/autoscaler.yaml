@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: autoscaler
+spec:
+  serviceAccountName: autoscaler-sa
+  restartPolicy: Always
+  containers:
+  - name: autoscaler
+    image: demo/autoscaler:latest
+    imagePullPolicy: IfNotPresent
+    env:
+    - name: PYTHONUNBUFFERED
+      value: "1"

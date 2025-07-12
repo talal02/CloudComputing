@@ -1,0 +1,12 @@
+# Build image for dispatcher router
+FROM python:3.13-slim
+
+# Minimal deps for request routing
+RUN pip install --no-cache-dir fastapi uvicorn[standard] requests kubernetes python-multipart
+
+WORKDIR /app
+COPY dispatcher.py .
+
+EXPOSE 8080
+
+CMD ["python", "dispatcher.py"] 

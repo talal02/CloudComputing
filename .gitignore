@@ -1,0 +1,3 @@
+*.zip
+experiment_data*
+.venv
